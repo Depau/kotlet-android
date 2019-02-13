@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'org.jetbrains.dokka-android'
 
 
 ext {
@@ -28,8 +30,6 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -44,9 +44,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'com.google.android.material:material:1.1.0-alpha03'
@@ -54,4 +51,42 @@ dependencies {
 
 repositories {
     mavenCentral()
+}
+
+
+dokka {
+    moduleName = 'kotlet-android'
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+
+    // List of files with module and package documentation
+    // http://kotlinlang.org/docs/reference/kotlin-doc.html#module-and-package-documentation
+    includes = ['README.md']
+
+    // Use to include or exclude non public members.
+    includeNonPublic = false
+
+    // Do not output deprecated members. Applies globally, can be overridden by packageOptions
+    skipDeprecated = true
+
+    // Emit warnings about not documented members. Applies globally, also can be overridden by packageOptions
+    reportUndocumented = true
+
+    skipEmptyPackages = true // Do not create index pages for empty packages
+}
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    classifier = 'javadoc'
+    from "$buildDir/javadoc"
+    archiveName = "javadoc.jar"
+}
+
+artifacts {
+    archives javadocJar
 }

@@ -8,7 +8,7 @@ apply plugin: 'org.jetbrains.dokka-android'
 ext {
     artifact = 'kotlet-android'
     group = 'eu.depau'
-    libraryVersion = '0.2.3'
+    libraryVersion = '0.2.4'
     publishedGroupId = 'eu.depau'
     libraryName = 'kotlet-android'
     libraryDescription = 'Kotlin commons to throw away boilerplate code'

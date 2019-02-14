@@ -1,5 +1,10 @@
 # Kotlet (Android)
+
+[![](https://jitpack.io/v/Depau/kotlet-android.svg)](https://jitpack.io/#Depau/kotlet-android)
+
 Kotlin commons to throw away boilerplate code.
+
+→ Kotlet (generic library): https://github.com/Depau/kotlet
 
 ![Cotoletta](cotoletta.png "Kotlet alla milanese")
 

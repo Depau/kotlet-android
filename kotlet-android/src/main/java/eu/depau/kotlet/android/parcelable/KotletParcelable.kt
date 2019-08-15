@@ -1,7 +1,9 @@
 package eu.depau.kotlet.android.parcelable
 
+import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
+import eu.depau.kotlet.android.BuildConfig
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
@@ -107,6 +109,10 @@ fun Parcel.writeBigInteger(value: BigInteger?) =
 
 fun Parcel.readBigDecimal() =
     readNullable { BigDecimal(BigInteger(createByteArray()), readInt()) }
+
+fun Parcel.writeBool(value: Boolean) = writeInt(if (value) 1 else 0)
+
+fun Parcel.readBool(): Boolean = readInt() != 0
 
 fun Parcel.writeBigDecimal(value: BigDecimal?) = writeNullable(value) {
     writeByteArray(it.unscaledValue().toByteArray())
